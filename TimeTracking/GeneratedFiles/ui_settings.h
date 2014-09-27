@@ -16,7 +16,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -33,7 +33,7 @@ class Ui_Settings
 public:
     QVBoxLayout *verticalLayout;
     QGroupBox *gbDBConnection;
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout;
     QLabel *l0;
     QComboBox *cmbTypeConnection;
     QLabel *l1;
@@ -44,9 +44,10 @@ public:
     QLineEdit *leUserName;
     QLabel *l4;
     QLineEdit *lePassword;
-    QCheckBox *cbSaveUP;
     QLabel *l5;
     QLineEdit *leNumber;
+    QPushButton *pbGenID;
+    QCheckBox *cbSaveUP;
     QHBoxLayout *horizontalLayout;
     QPushButton *pbOk;
     QSpacerItem *horizontalSpacer;
@@ -56,82 +57,87 @@ public:
     {
         if (Settings->objectName().isEmpty())
             Settings->setObjectName(QStringLiteral("Settings"));
-        Settings->resize(379, 258);
+        Settings->resize(395, 275);
         verticalLayout = new QVBoxLayout(Settings);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         gbDBConnection = new QGroupBox(Settings);
         gbDBConnection->setObjectName(QStringLiteral("gbDBConnection"));
-        formLayout = new QFormLayout(gbDBConnection);
-        formLayout->setSpacing(6);
-        formLayout->setContentsMargins(11, 11, 11, 11);
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        gridLayout = new QGridLayout(gbDBConnection);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         l0 = new QLabel(gbDBConnection);
         l0->setObjectName(QStringLiteral("l0"));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, l0);
+        gridLayout->addWidget(l0, 0, 0, 1, 1);
 
         cmbTypeConnection = new QComboBox(gbDBConnection);
         cmbTypeConnection->setObjectName(QStringLiteral("cmbTypeConnection"));
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, cmbTypeConnection);
+        gridLayout->addWidget(cmbTypeConnection, 0, 1, 1, 2);
 
         l1 = new QLabel(gbDBConnection);
         l1->setObjectName(QStringLiteral("l1"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, l1);
+        gridLayout->addWidget(l1, 1, 0, 1, 1);
 
         leHostName = new QLineEdit(gbDBConnection);
         leHostName->setObjectName(QStringLiteral("leHostName"));
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, leHostName);
+        gridLayout->addWidget(leHostName, 1, 1, 1, 2);
 
         l2 = new QLabel(gbDBConnection);
         l2->setObjectName(QStringLiteral("l2"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, l2);
+        gridLayout->addWidget(l2, 2, 0, 1, 1);
 
         leDatabaseName = new QLineEdit(gbDBConnection);
         leDatabaseName->setObjectName(QStringLiteral("leDatabaseName"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, leDatabaseName);
+        gridLayout->addWidget(leDatabaseName, 2, 1, 1, 2);
 
         l3 = new QLabel(gbDBConnection);
         l3->setObjectName(QStringLiteral("l3"));
 
-        formLayout->setWidget(3, QFormLayout::LabelRole, l3);
+        gridLayout->addWidget(l3, 3, 0, 1, 1);
 
         leUserName = new QLineEdit(gbDBConnection);
         leUserName->setObjectName(QStringLiteral("leUserName"));
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, leUserName);
+        gridLayout->addWidget(leUserName, 3, 1, 1, 2);
 
         l4 = new QLabel(gbDBConnection);
         l4->setObjectName(QStringLiteral("l4"));
 
-        formLayout->setWidget(4, QFormLayout::LabelRole, l4);
+        gridLayout->addWidget(l4, 4, 0, 1, 1);
 
         lePassword = new QLineEdit(gbDBConnection);
         lePassword->setObjectName(QStringLiteral("lePassword"));
         lePassword->setEchoMode(QLineEdit::Password);
 
-        formLayout->setWidget(4, QFormLayout::FieldRole, lePassword);
-
-        cbSaveUP = new QCheckBox(gbDBConnection);
-        cbSaveUP->setObjectName(QStringLiteral("cbSaveUP"));
-
-        formLayout->setWidget(6, QFormLayout::SpanningRole, cbSaveUP);
+        gridLayout->addWidget(lePassword, 4, 1, 1, 2);
 
         l5 = new QLabel(gbDBConnection);
         l5->setObjectName(QStringLiteral("l5"));
 
-        formLayout->setWidget(5, QFormLayout::LabelRole, l5);
+        gridLayout->addWidget(l5, 5, 0, 1, 1);
 
         leNumber = new QLineEdit(gbDBConnection);
         leNumber->setObjectName(QStringLiteral("leNumber"));
 
-        formLayout->setWidget(5, QFormLayout::FieldRole, leNumber);
+        gridLayout->addWidget(leNumber, 5, 1, 1, 1);
+
+        pbGenID = new QPushButton(gbDBConnection);
+        pbGenID->setObjectName(QStringLiteral("pbGenID"));
+
+        gridLayout->addWidget(pbGenID, 5, 2, 1, 1);
+
+        cbSaveUP = new QCheckBox(gbDBConnection);
+        cbSaveUP->setObjectName(QStringLiteral("cbSaveUP"));
+
+        gridLayout->addWidget(cbSaveUP, 6, 0, 1, 2);
 
 
         verticalLayout->addWidget(gbDBConnection);
@@ -160,7 +166,8 @@ public:
         QWidget::setTabOrder(leHostName, leDatabaseName);
         QWidget::setTabOrder(leDatabaseName, leUserName);
         QWidget::setTabOrder(leUserName, lePassword);
-        QWidget::setTabOrder(lePassword, cbSaveUP);
+        QWidget::setTabOrder(lePassword, leNumber);
+        QWidget::setTabOrder(leNumber, cbSaveUP);
         QWidget::setTabOrder(cbSaveUP, pbOk);
         QWidget::setTabOrder(pbOk, pbCancel);
 
@@ -178,8 +185,9 @@ public:
         l2->setText(QApplication::translate("Settings", "Database name", 0));
         l3->setText(QApplication::translate("Settings", "User name", 0));
         l4->setText(QApplication::translate("Settings", "Password", 0));
-        cbSaveUP->setText(QApplication::translate("Settings", "Save user name and password", 0));
         l5->setText(QApplication::translate("Settings", "ID", 0));
+        pbGenID->setText(QApplication::translate("Settings", "Gen ID", 0));
+        cbSaveUP->setText(QApplication::translate("Settings", "Save user password", 0));
         pbOk->setText(QApplication::translate("Settings", "Ok", 0));
         pbCancel->setText(QApplication::translate("Settings", "Cancel", 0));
     } // retranslateUi

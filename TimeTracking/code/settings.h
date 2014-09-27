@@ -16,6 +16,7 @@ protected slots:
 
 void on_pbOk_clicked();
 void on_pbCancel_clicked();
+void on_pbGenID_clicked();
 
 
 private:
