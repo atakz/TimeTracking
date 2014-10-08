@@ -57,7 +57,7 @@ public:
     {
         if (Settings->objectName().isEmpty())
             Settings->setObjectName(QStringLiteral("Settings"));
-        Settings->resize(395, 275);
+        Settings->resize(522, 275);
         verticalLayout = new QVBoxLayout(Settings);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);

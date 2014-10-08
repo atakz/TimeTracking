@@ -59,6 +59,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_settings.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_csdbconnection.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_csdbconnection.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="code\csdbconnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="timetracking.qrc">
@@ -74,6 +83,9 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="code\settings.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="code\csdbconnection.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
