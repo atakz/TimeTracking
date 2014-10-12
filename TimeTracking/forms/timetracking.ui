@@ -15,23 +15,42 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
-     <widget class="QMdiArea" name="mdiArea"/>
+     <widget class="QGroupBox" name="gbFilter">
+      <property name="title">
+       <string>Filter options</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QDateEdit" name="de_begin"/>
+       </item>
+       <item>
+        <widget class="QDateEdit" name="de_end"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cmb_empoyer"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cmb_customer"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbFilter">
+         <property name="text">
+          <string>Filter</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableView" name="tv"/>
     </item>
    </layout>
   </widget>
@@ -73,15 +92,8 @@
     <addaction name="actionAbout"/>
     <addaction name="actionHelp"/>
    </widget>
-   <widget class="QMenu" name="menuRegister">
-    <property name="title">
-     <string>Register</string>
-    </property>
-    <addaction name="actionRegister"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuReferences"/>
-   <addaction name="menuRegister"/>
    <addaction name="menuReports"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -157,7 +169,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="timetracking.qrc"/>
+  <include location="../timetracking.qrc"/>
  </resources>
  <connections/>
 </ui>

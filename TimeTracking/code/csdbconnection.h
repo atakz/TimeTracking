@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 
 class csDBConnection : public QObject
 {
@@ -16,6 +17,8 @@ public:
 
 private:
 	QSqlDatabase database;
+
+	void test_and_create();
 	
 };
 

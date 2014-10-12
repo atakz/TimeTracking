@@ -13,12 +13,17 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateEdit>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMdiArea>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -42,13 +47,19 @@ public:
     QAction *actionRegister;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    QMdiArea *mdiArea;
+    QGroupBox *gbFilter;
+    QHBoxLayout *horizontalLayout;
+    QDateEdit *de_begin;
+    QDateEdit *de_end;
+    QComboBox *cmb_empoyer;
+    QComboBox *cmb_customer;
+    QPushButton *pbFilter;
+    QTableView *tv;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuReferences;
     QMenu *menuReports;
     QMenu *menuHelp;
-    QMenu *menuRegister;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -84,14 +95,49 @@ public:
         centralWidget = new QWidget(TimeTrackingClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(0);
+        verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        mdiArea = new QMdiArea(centralWidget);
-        mdiArea->setObjectName(QStringLiteral("mdiArea"));
+        gbFilter = new QGroupBox(centralWidget);
+        gbFilter->setObjectName(QStringLiteral("gbFilter"));
+        horizontalLayout = new QHBoxLayout(gbFilter);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        de_begin = new QDateEdit(gbFilter);
+        de_begin->setObjectName(QStringLiteral("de_begin"));
 
-        verticalLayout->addWidget(mdiArea);
+        horizontalLayout->addWidget(de_begin);
+
+        de_end = new QDateEdit(gbFilter);
+        de_end->setObjectName(QStringLiteral("de_end"));
+
+        horizontalLayout->addWidget(de_end);
+
+        cmb_empoyer = new QComboBox(gbFilter);
+        cmb_empoyer->setObjectName(QStringLiteral("cmb_empoyer"));
+
+        horizontalLayout->addWidget(cmb_empoyer);
+
+        cmb_customer = new QComboBox(gbFilter);
+        cmb_customer->setObjectName(QStringLiteral("cmb_customer"));
+
+        horizontalLayout->addWidget(cmb_customer);
+
+        pbFilter = new QPushButton(gbFilter);
+        pbFilter->setObjectName(QStringLiteral("pbFilter"));
+        pbFilter->setCheckable(true);
+        pbFilter->setChecked(false);
+
+        horizontalLayout->addWidget(pbFilter);
+
+
+        verticalLayout->addWidget(gbFilter);
+
+        tv = new QTableView(centralWidget);
+        tv->setObjectName(QStringLiteral("tv"));
+
+        verticalLayout->addWidget(tv);
 
         TimeTrackingClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(TimeTrackingClass);
@@ -105,8 +151,6 @@ public:
         menuReports->setObjectName(QStringLiteral("menuReports"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
-        menuRegister = new QMenu(menuBar);
-        menuRegister->setObjectName(QStringLiteral("menuRegister"));
         TimeTrackingClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(TimeTrackingClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -117,7 +161,6 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuReferences->menuAction());
-        menuBar->addAction(menuRegister->menuAction());
         menuBar->addAction(menuReports->menuAction());
         menuBar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionSettings);
@@ -129,7 +172,6 @@ public:
         menuReports->addAction(actionRepCustomers);
         menuHelp->addAction(actionAbout);
         menuHelp->addAction(actionHelp);
-        menuRegister->addAction(actionRegister);
 
         retranslateUi(TimeTrackingClass);
 
@@ -151,11 +193,12 @@ public:
         actionAbout->setText(QApplication::translate("TimeTrackingClass", "About", 0));
         actionHelp->setText(QApplication::translate("TimeTrackingClass", "Help", 0));
         actionRegister->setText(QApplication::translate("TimeTrackingClass", "Register", 0));
+        gbFilter->setTitle(QApplication::translate("TimeTrackingClass", "Filter options", 0));
+        pbFilter->setText(QApplication::translate("TimeTrackingClass", "Filter", 0));
         menuFile->setTitle(QApplication::translate("TimeTrackingClass", "File", 0));
         menuReferences->setTitle(QApplication::translate("TimeTrackingClass", "References", 0));
         menuReports->setTitle(QApplication::translate("TimeTrackingClass", "Reports", 0));
         menuHelp->setTitle(QApplication::translate("TimeTrackingClass", "Help", 0));
-        menuRegister->setTitle(QApplication::translate("TimeTrackingClass", "Register", 0));
     } // retranslateUi
 
 };
