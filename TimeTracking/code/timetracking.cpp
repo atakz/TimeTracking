@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "dcsemployer.h"
 #include "dcscustomer.h"
+#include "dcsregister.h"
 
 #include <QSqlRelationalDelegate>
 #include <QDebug>
