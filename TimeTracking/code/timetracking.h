@@ -23,12 +23,20 @@ protected slots:
 	void on_actionRepCustomers_triggered();
 	void on_actionHelp_triggered();
 	void on_actionAbout_triggered();
+	void on_actionRegister_triggered();
+	void on_actionNewItem_triggered();
+	void on_actionEditItem_triggered();
+	void on_actionDeleteItem_trigerred();
+
+	void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
 private:
 	Ui::TimeTrackingClass ui;
 	csDBConnection dbc;
 
-	QSqlRelationalTableModel model;
+	QSqlRelationalTableModel *model;
+	QItemSelectionModel* selModel;
+	int currentMode;
 };
 
 #endif // TIMETRACKING_H

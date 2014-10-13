@@ -1,4 +1,16 @@
 <RCC>
-    <qresource prefix="TimeTracking">
-    </qresource>
+  <qresource prefix="TimeTracking">
+    <file>Resources/help-about.png</file>
+    <file>Resources/help-faq.png</file>
+    <file>Resources/stock_task.png</file>
+    <file>Resources/format-indent-less.png</file>
+    <file>Resources/format-indent-more.png</file>
+    <file>Resources/evolution-contacts.png</file>
+    <file>Resources/user-info.png</file>
+    <file>Resources/gnome-session-logout.png</file>
+    <file>Resources/stock_folder-properties.png</file>
+    <file>Resources/document-new.png</file>
+    <file>Resources/edit-clear.png</file>
+    <file>Resources/edit-delete.png</file>
+  </qresource>
 </RCC>

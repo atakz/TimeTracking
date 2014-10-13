@@ -78,7 +78,6 @@ void csDBConnection::test_and_create()
 			" mach TEXT "
 			");"
 			);
-		//query.exec("INSERT INTO ref_employees (name,mach) VALUES ( \'123\', \'321\')");
 		query.exec(
 			"CREATE TABLE ref_customers ("
 			" id INTEGER PRIMARY KEY ASC, "
@@ -88,6 +87,7 @@ void csDBConnection::test_and_create()
 			);
 		query.exec(
 			"CREATE TABLE reg_main ("
+			" id INTEGER PRIMARY KEY ASC, "
 			" employer INTEGER,"
 			" customer INTEGER,"
 			" m_date DATE,"
