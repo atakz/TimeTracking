@@ -1,8 +1,11 @@
 #include "timetracking.h"
 #include "settings.h"
+#include "dcsemployer.h"
+#include "dcscustomer.h"
 
 #include <QSqlRelationalDelegate>
 #include <QDebug>
+#include <QMessageBox>
 
 TimeTracking::TimeTracking(QWidget *parent)
 	: QMainWindow(parent)
@@ -138,6 +141,8 @@ void TimeTracking::on_actionRegister_triggered()
 	model->setTable("reg_main");
 
 	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+	model->setRelation(1, QSqlRelation("ref_employees", "id", "name"));
+	model->setRelation(2, QSqlRelation("ref_customers", "id", "name"));
 
 	model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
 	model->setHeaderData(1, Qt::Horizontal, QObject::tr("Employer"));
@@ -165,17 +170,90 @@ void TimeTracking::on_actionRegister_triggered()
 
 void TimeTracking::on_actionNewItem_triggered()
 {
-
+	switch (currentMode)
+	{
+	case 0: // reg
+		break;
+	case 1: // emp
+	{
+		dcsEmployer *emp = new dcsEmployer();
+		if (emp->exec()==QDialog::Accepted){
+			model->select();
+		}
+		delete emp;
+	}
+		break;
+	case 2: // cus
+	{
+		dcsCustomer *emp = new dcsCustomer();
+		if (emp->exec() == QDialog::Accepted){
+			model->select();
+		}
+		delete emp;
+	}
+		break;
+	default:
+		break;
+	}
 }
 
 void TimeTracking::on_actionEditItem_triggered()
 {
-
+	QModelIndex ind = ui.tv->currentIndex();
+	ind = ind.sibling(ind.row(), 0);
+	int p = ind.data().toInt();
+	switch (currentMode)
+	{
+	case 0: // reg
+		break;
+	case 1: // emp
+	{
+		dcsEmployer *emp = new dcsEmployer(p);
+		if (emp->exec() == QDialog::Accepted){
+			model->select();
+		}
+		delete emp;
+	}
+		break;
+	case 2: // cus
+	{
+		dcsCustomer *emp = new dcsCustomer(p);
+		if (emp->exec() == QDialog::Accepted){
+			model->select();
+		}
+		delete emp;
+	}
+		break;
+	default:
+		break;
+	}
 }
 
-void TimeTracking::on_actionDeleteItem_trigerred()
+void TimeTracking::on_actionDeleteItem_triggered()
 {
+	QModelIndex ind = ui.tv->currentIndex();
+	ind = ind.sibling(ind.row(), 0);
+	int p = ind.data().toInt();
 
+	if (QMessageBox::question(this, QObject::tr("Delete"), QObject::tr("Are you sure you want to delete object?")) == QMessageBox::Yes)
+	{
+		QSqlQuery query;
+		switch (currentMode)
+		{
+		case 0: // reg
+			query.exec(QString("DELETE FROM reg_main WHERE id = %0").arg(p));
+			break;
+		case 1: // emp
+			query.exec(QString("DELETE FROM ref_employees WHERE id = %0").arg(p));
+			break;
+		case 2: // cus
+			query.exec(QString("DELETE FROM ref_customers WHERE id = %0").arg(p));
+			break;
+		default:
+			break;
+		}
+		model->select();
+	}
 }
 
 void TimeTracking::selectionChanged(const QItemSelection & selected, const QItemSelection & deselected)

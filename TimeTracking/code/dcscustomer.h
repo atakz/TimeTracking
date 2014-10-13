@@ -9,11 +9,17 @@ class dcsCustomer : public QDialog
 	Q_OBJECT
 
 public:
-	dcsCustomer(QWidget *parent = 0);
+	dcsCustomer(int code = 0, QWidget *parent = 0);
 	~dcsCustomer();
+
+protected slots:
+	void on_pbOk_clicked();
+	void on_pnCancel_clicked();
 
 private:
 	Ui::dcsCustomer ui;
+	int mCode;
+	QString mach;
 };
 
 #endif // DCSCUSTOMER_H

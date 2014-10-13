@@ -26,7 +26,7 @@ protected slots:
 	void on_actionRegister_triggered();
 	void on_actionNewItem_triggered();
 	void on_actionEditItem_triggered();
-	void on_actionDeleteItem_trigerred();
+	void on_actionDeleteItem_triggered();
 
 	void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
