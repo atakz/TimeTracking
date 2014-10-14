@@ -44,7 +44,7 @@ dcsRegister::dcsRegister(int code, QWidget *parent)
 				ui.cmbCustomer->setCurrentIndex(mr_cus[cus]);
 				ui.date->setDate(query.value(3).toDate());
 				float tm = query.value(4).toFloat();
-				ui.time->setTime(QTime(tm, 0));
+				ui.time->setValue(tm);
 				ui.leDescription->setText(query.value(5).toString());
 				ui.leComment->setText(query.value(6).toString());
 			}
@@ -53,7 +53,7 @@ dcsRegister::dcsRegister(int code, QWidget *parent)
 	else
 	{
 		ui.date->setDate(QDate::currentDate());
-		ui.time->setTime(QTime(1, 0));
+		ui.time->setValue(1.0);
 	}
 }
 
@@ -68,11 +68,19 @@ void dcsRegister::on_pbOk_clicked()
 
 	if (mCode != 0)
 	{
-		//query.exec("UPDATE reg_main SET ")
+		query.exec(QString(
+			"UPDATE reg_main SET employer=%0, customer=%1, m_date=\'%2\', m_time=%3, m_desc=\'%4\', m_comm=\'%5\' WHERE id=%6"
+			).arg(m_emp[ui.cmbEmployer->currentIndex()]).arg(m_cus[ui.cmbCustomer->currentIndex()]).arg(ui.date->date().toString("yyyy-MM-dd"))
+			.arg(ui.time->value()).arg(ui.leDescription->text()).arg(ui.leComment->text()).arg(mCode)
+			);
 	}
 	else
 	{
-
+		query.exec(QString(
+			"INSERT INTO reg_main (employer,customer,m_date,m_time,m_desc,m_comm) VALUES (%0,%1,\'%2\',%3,\'%4\',\'%5\')"
+			).arg(m_emp[ui.cmbEmployer->currentIndex()]).arg(m_cus[ui.cmbCustomer->currentIndex()]).arg(ui.date->date().toString("yyyy-MM-dd"))
+			.arg(ui.time->value()).arg(ui.leDescription->text()).arg(ui.leComment->text())
+			);
 	}
 
 	accept();

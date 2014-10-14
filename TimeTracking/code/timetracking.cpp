@@ -161,6 +161,36 @@ void TimeTracking::on_actionRegister_triggered()
 	{
 		qDebug() << "ok";
 	}
+
+	QSqlQuery query;
+	if (query.exec("SELECT id,name FROM ref_employees"))
+	{
+		int last = ui.cmb_empoyer->currentIndex();
+		ui.cmb_empoyer->clear();
+		int i = 0;
+		while (query.next())
+		{
+			int p = query.value(0).toInt();
+			pr_emp[i] = p;
+			ob_emp[p] = i;
+			ui.cmb_empoyer->addItem(query.value(1).toString());
+		}
+		ui.cmb_empoyer->setCurrentIndex(last);
+	}
+	if (query.exec("SELECT id,name FROM ref_customers"))
+	{
+		int last = ui.cmb_customer->currentIndex();
+		ui.cmb_customer->clear();
+		int i = 0;
+		while (query.next())
+		{
+			int p = query.value(0).toInt();
+			pr_cus[i] = p;
+			ob_cus[p] = i;
+			ui.cmb_customer->addItem(query.value(1).toString());
+		}
+		ui.cmb_customer->setCurrentIndex(last);
+	}
 	
 	ui.gbFilter->show();
 	ui.actionDeleteItem->setEnabled(false);
@@ -174,12 +204,24 @@ void TimeTracking::on_actionNewItem_triggered()
 	switch (currentMode)
 	{
 	case 0: // reg
+	{
+		dcsRegister *reg = new dcsRegister();
+		if (reg->exec() == QDialog::Accepted)
+		{
+			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
+		}
+		delete reg;
+	}
 		break;
 	case 1: // emp
 	{
 		dcsEmployer *emp = new dcsEmployer();
 		if (emp->exec()==QDialog::Accepted){
 			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
 		}
 		delete emp;
 	}
@@ -189,6 +231,8 @@ void TimeTracking::on_actionNewItem_triggered()
 		dcsCustomer *emp = new dcsCustomer();
 		if (emp->exec() == QDialog::Accepted){
 			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
 		}
 		delete emp;
 	}
@@ -206,12 +250,24 @@ void TimeTracking::on_actionEditItem_triggered()
 	switch (currentMode)
 	{
 	case 0: // reg
+	{
+		dcsRegister *reg = new dcsRegister(p);
+		if (reg->exec() == QDialog::Accepted)
+		{
+			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
+		}
+		delete reg;
+	}
 		break;
 	case 1: // emp
 	{
 		dcsEmployer *emp = new dcsEmployer(p);
 		if (emp->exec() == QDialog::Accepted){
 			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
 		}
 		delete emp;
 	}
@@ -221,6 +277,8 @@ void TimeTracking::on_actionEditItem_triggered()
 		dcsCustomer *emp = new dcsCustomer(p);
 		if (emp->exec() == QDialog::Accepted){
 			model->select();
+			ui.actionDeleteItem->setEnabled(false);
+			ui.actionEditItem->setEnabled(false);
 		}
 		delete emp;
 	}

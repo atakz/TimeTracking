@@ -37,6 +37,11 @@ private:
 	QSqlRelationalTableModel *model;
 	QItemSelectionModel* selModel;
 	int currentMode;
+
+	QMap<int, int> pr_emp;
+	QMap<int, int> ob_emp;
+	QMap<int, int> pr_cus;
+	QMap<int, int> ob_cus;
 };
 
 #endif // TIMETRACKING_H

@@ -60,7 +60,7 @@
       <widget class="QDateEdit" name="date"/>
      </item>
      <item>
-      <widget class="QTimeEdit" name="time"/>
+      <widget class="QDoubleSpinBox" name="time"/>
      </item>
     </layout>
    </item>
@@ -145,7 +145,6 @@
   <tabstop>cmbEmployer</tabstop>
   <tabstop>cmbCustomer</tabstop>
   <tabstop>date</tabstop>
-  <tabstop>time</tabstop>
   <tabstop>leDescription</tabstop>
   <tabstop>leComment</tabstop>
   <tabstop>pbOk</tabstop>
