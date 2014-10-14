@@ -1,7 +1,7 @@
 #include "csdbconnection.h"
 #include <QSettings>
 #include <QDebug>
-
+#include <QUuid>
 
 csDBConnection::csDBConnection(QObject *parent)
 	: QObject(parent)
@@ -27,6 +27,16 @@ void csDBConnection::connect()
 	set.beginGroup("DBConnection");
 	QString str_tc = set.value("TypeConnection").toString();
 	QString str_dn = set.value("DatabaseName").toString();
+
+	if (str_tc.isEmpty())
+	{
+		str_tc = "QSQLITE";
+		str_dn = "mdb.db";
+		set.setValue("TypeConnection",str_tc);
+		set.setValue("DatabaseName",str_dn);
+		set.setValue("ID", QUuid::createUuid().toString().replace("{", "").replace("}", ""));
+	}
+
 	set.endGroup();
 
 	database = QSqlDatabase::addDatabase( str_tc );

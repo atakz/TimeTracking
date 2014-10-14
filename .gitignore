@@ -30,3 +30,4 @@ _ReSharper*/
 *.sdf
 *.opensdf
 [Gg]enerated[Ff]iles*/
+*.qm
