@@ -134,7 +134,7 @@ void TimeTracking::on_actionHelp_triggered()
 
 void TimeTracking::on_actionAbout_triggered()
 {
-
+	QMessageBox::about(this,QObject::tr("Time Tracking"),QObject::tr("LGPL\nauthor A.Kuangaliyev\nrepo https://github.com/atakz/TimeTracking"));
 }
 
 void TimeTracking::on_actionRegister_triggered()

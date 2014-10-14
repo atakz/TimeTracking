@@ -26,6 +26,22 @@
         <translation>Компьютер</translation>
     </message>
     <message>
+        <location filename="code/timetracking.cpp" line="137"/>
+        <source>Time Tracking</source>
+        <translatorcomment>Учет времени</translatorcomment>
+        <translation>Учет времени</translation>
+    </message>
+    <message>
+        <location filename="code/timetracking.cpp" line="137"/>
+        <source>LGPL
+author A.Kuangaliyev
+repo https://github.com/atakz/TimeTracking</source>
+        <translatorcomment>LGPL</translatorcomment>
+        <translation>LGPL
+автор А.Куангалиев
+репозиторий https://github.com/atakz/TimeTracking</translation>
+    </message>
+    <message>
         <location filename="code/timetracking.cpp" line="149"/>
         <source>Employer</source>
         <translatorcomment>Сотрудник</translatorcomment>
