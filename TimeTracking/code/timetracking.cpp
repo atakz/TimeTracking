@@ -153,6 +153,8 @@ void TimeTracking::on_actionRegister_triggered()
 	model->setHeaderData(5, Qt::Horizontal, QObject::tr("Description"));
 	model->setHeaderData(6, Qt::Horizontal, QObject::tr("Comment"));
 
+	model->setSort(3,Qt::AscendingOrder);
+
 	if (!model->select())
 	{
 
@@ -167,6 +169,8 @@ void TimeTracking::on_actionRegister_triggered()
 	{
 		int last = ui.cmb_empoyer->currentIndex();
 		ui.cmb_empoyer->clear();
+		pr_emp.clear();
+		ob_emp.clear();
 		int i = 0;
 		while (query.next())
 		{
@@ -174,6 +178,7 @@ void TimeTracking::on_actionRegister_triggered()
 			pr_emp[i] = p;
 			ob_emp[p] = i;
 			ui.cmb_empoyer->addItem(query.value(1).toString());
+			i++;
 		}
 		ui.cmb_empoyer->setCurrentIndex(last);
 	}
@@ -181,6 +186,8 @@ void TimeTracking::on_actionRegister_triggered()
 	{
 		int last = ui.cmb_customer->currentIndex();
 		ui.cmb_customer->clear();
+		pr_cus.clear();
+		ob_cus.clear();
 		int i = 0;
 		while (query.next())
 		{
@@ -188,14 +195,16 @@ void TimeTracking::on_actionRegister_triggered()
 			pr_cus[i] = p;
 			ob_cus[p] = i;
 			ui.cmb_customer->addItem(query.value(1).toString());
+			i++;
 		}
 		ui.cmb_customer->setCurrentIndex(last);
 	}
 	
 	ui.gbFilter->show();
+	setFilter(ui.pbFilter->isChecked());
 	ui.actionDeleteItem->setEnabled(false);
 	ui.actionEditItem->setEnabled(false);
-
+	updateStatus();
 	currentMode = 0;
 }
 
@@ -211,6 +220,7 @@ void TimeTracking::on_actionNewItem_triggered()
 			model->select();
 			ui.actionDeleteItem->setEnabled(false);
 			ui.actionEditItem->setEnabled(false);
+			updateStatus();
 		}
 		delete reg;
 	}
@@ -257,6 +267,7 @@ void TimeTracking::on_actionEditItem_triggered()
 			model->select();
 			ui.actionDeleteItem->setEnabled(false);
 			ui.actionEditItem->setEnabled(false);
+			updateStatus();
 		}
 		delete reg;
 	}
@@ -319,4 +330,82 @@ void TimeTracking::selectionChanged(const QItemSelection & selected, const QItem
 {
 	ui.actionDeleteItem->setEnabled(true);
 	ui.actionEditItem->setEnabled(true);
+}
+
+void TimeTracking::on_pbFilter_toggled(bool p)
+{
+	setFilter(p);
+}
+
+void TimeTracking::setFilter(bool p)
+{
+	QString str;
+	
+	if (p)
+	{
+		if (ui.cmb_empoyer->currentIndex() != -1)
+		{
+			if (!str.isEmpty()) str += " and ";
+			str += QString(" employer = %0 ").arg(pr_emp[ui.cmb_empoyer->currentIndex()]);
+		}
+		if (ui.cmb_customer->currentIndex() != -1)
+		{
+			if (!str.isEmpty())str += " and ";
+			str += QString(" customer = %0 ").arg(pr_cus[ui.cmb_customer->currentIndex()]);
+		}
+		if (!str.isEmpty())str += " and ";
+		str += QString(" m_date >= \'%0\' and m_date <= \'%1\' ").arg(ui.de_begin->date().toString("yyyy-MM-dd")).arg(ui.de_end->date().toString("yyyy-MM-dd"));
+	}
+	model->setFilter( str );
+	updateStatus();
+
+}
+
+void TimeTracking::updateStatus()
+{
+	QString str0 = "SELECT SUM(m_time) FROM reg_main";
+	
+	if (ui.pbFilter->isChecked())
+	{
+		QString str;
+		if (ui.cmb_empoyer->currentIndex() != -1)
+		{
+			if (!str.isEmpty()) str += " and ";
+			str += QString(" employer = %0 ").arg(pr_emp[ui.cmb_empoyer->currentIndex()]);
+		}
+		if (ui.cmb_customer->currentIndex() != -1)
+		{
+			if (!str.isEmpty())str += " and ";
+			str += QString(" customer = %0 ").arg(pr_cus[ui.cmb_customer->currentIndex()]);
+		}
+		if (!str.isEmpty())str += " and ";
+		str += QString(" m_date >= \'%0\' and m_date <= \'%1\' ").arg(ui.de_begin->date().toString("yyyy-MM-dd")).arg(ui.de_end->date().toString("yyyy-MM-dd"));
+		str0 += " WHERE " + str;
+	}
+	
+	QSqlQuery query(str0);
+	if (query.next())
+	{
+		ui.statusBar->showMessage(QObject::tr("time = " ) + query.value(0).toString());
+	}
+}
+
+void TimeTracking::on_de_begin_dateChanged(const QDate&)
+{
+	setFilter(ui.pbFilter->isChecked());
+}
+
+void TimeTracking::on_de_end_dateChanged(const QDate&)
+{
+	setFilter(ui.pbFilter->isChecked());
+}
+
+void TimeTracking::on_cmb_empoyer_currentIndexChanged(int)
+{
+	setFilter(ui.pbFilter->isChecked());
+}
+
+void TimeTracking::on_cmb_customer_currentIndexChanged(int)
+{
+	setFilter(ui.pbFilter->isChecked());
 }

@@ -27,6 +27,13 @@ protected slots:
 	void on_actionNewItem_triggered();
 	void on_actionEditItem_triggered();
 	void on_actionDeleteItem_triggered();
+	void on_pbFilter_toggled(bool);
+
+	void on_de_begin_dateChanged(const QDate&);
+	void on_de_end_dateChanged(const QDate&);
+
+	void on_cmb_empoyer_currentIndexChanged(int);
+	void on_cmb_customer_currentIndexChanged(int);
 
 	void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
@@ -42,6 +49,10 @@ private:
 	QMap<int, int> ob_emp;
 	QMap<int, int> pr_cus;
 	QMap<int, int> ob_cus;
+
+	void setFilter(bool p);
+	void updateStatus();
+
 };
 
 #endif // TIMETRACKING_H
